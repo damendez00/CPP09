@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:54:47 by damendez          #+#    #+#             */
-/*   Updated: 2024/11/04 17:40:09 by damendez         ###   ########.fr       */
+/*   Updated: 2024/11/04 19:10:53 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ class BtcExchange
         ~BtcExchange();
 
         static bool getCSV(std::map<std::string, float> &data);
-        static bool getBTC(const std::map<std::string, float> &data, std::string file);
+        static bool getBTC(const std::map<std::string, float> &data, std::string infile);
         static void parseFileLine(std::string data, float value);
         static void parseDate(std::string date);
         static void printCSV(const std::map<std::string, float> &data);
