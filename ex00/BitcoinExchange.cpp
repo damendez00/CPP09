@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:35:58 by damendez          #+#    #+#             */
-/*   Updated: 2024/11/04 20:06:41 by damendez         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:57:07 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,26 @@ BtcExchange::~BtcExchange()
 {
 }
 
+float stringToFloat(const std::string &str)
+{
+    std::stringstream ss(str);
+    float result;
+    ss >> result;
+    if (ss.fail())
+        throw std::invalid_argument("Error: invalid number.");   
+    return result;
+}
+
+int stringToInt(const std::string &str)
+{
+    std::stringstream ss(str);
+    int result;
+    ss >> result;
+    if (ss.fail())
+        throw std::invalid_argument("Error: invalid number.");
+    return result;
+}
+
 void    parseFileLine(std::string date, float value)
 {
     bool error = false;
@@ -45,23 +65,23 @@ void    parseFileLine(std::string date, float value)
         for (int i = 0; i < (int)year.length(); i++)
             if (!std::isdigit(year[i]))
                 error = true;
-        if (error == false && (std::stoi(year) > 2023 || std::stoi(year) < 2009))
+        if (error == false && (stringToInt(year) > 2023 || stringToInt(year) < 2009))
             error = true;
 
         std::string	month = date.substr(5, 2);
 		for (int i = 0; i < (int)month.length(); i++)
 			if (error == false && !std::isdigit(month[i]))
 				error = true;
-		if (error == false && std::stoi(month) > 12)
+		if (error == false && stringToInt(month) > 12)
 			error = true;
 			
 		std::string	day = date.substr(8, 2);
 		for (int i = 0; i < (int)day.length(); i++)
 			if (error == false && !std::isdigit(day[i]))
 				error = true;
-		if (error == false && std::stoi(day) > 31)
+		if (error == false && stringToInt(day) > 31)
 			error = true;
-		if (error == false && std::stoi(day) < 2 && std::stoi(year) == 2009)
+		if (error == false && stringToInt(day) < 2 && stringToInt(year) == 2009)
 			error = true;
     }
     else
@@ -77,7 +97,7 @@ void    parseFileLine(std::string date, float value)
 
 bool    getBTC(const std::map<std::string, float> &data, std::string infile)
 {
-    std::ifstream file(infile);
+    std::ifstream file(infile.c_str());
     if (!file.is_open())
     {
         std::string error;
@@ -105,13 +125,13 @@ bool    getBTC(const std::map<std::string, float> &data, std::string infile)
                     for (int i = 0; i < (int)value.length(); i++)
                         if (!std::isdigit(value[i]) && value[i] != '.')
                             throw std::invalid_argument("Error: invalid number.");
-                    fvalue = std::stof(value);
+                    fvalue = stringToFloat(value);
                 }
                 catch(const std::exception& e)
                 {
                     throw std::invalid_argument("Error: invalid number.");
                 }
-                parseFileLine(data, fvalue); // TO-DO
+                parseFileLine(date, fvalue);
                 std::map<std::string, float>::const_iterator it = data.lower_bound(date); // position of map that has string not less than date
 				// if (it == data.begin() || (it != data.end() && it->first != date))
 				// 	--it;
@@ -141,7 +161,7 @@ void    parseDate(std::string date)
             else
             {
                 std::cout << date << "" << date[i] << std::endl;
-                throw std::runtime_error("There's an error in a date in the CSV db.")
+                throw std::runtime_error("There's an error in a date in the CSV db.");
             }
         }
         else
@@ -149,7 +169,7 @@ void    parseDate(std::string date)
             if (date[i] >= '0' && date[i] <= '9')
                 continue ;
             else
-                throw std::runtime_error("There's an error in a date in the CSV db.")
+                throw std::runtime_error("There's an error in a date in the CSV db.");
         }
     }
 }
@@ -172,7 +192,7 @@ bool    BtcExchange::getCSV(std::map<std::string, float> &data)
         {
             try
             {
-                float fvalue = std::stof(value);
+                float fvalue = stringToFloat(value);
                 parseDate(date);
                 data[date] = fvalue;
             }
