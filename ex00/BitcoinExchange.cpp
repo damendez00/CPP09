@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:35:58 by damendez          #+#    #+#             */
-/*   Updated: 2024/11/05 15:57:07 by damendez         ###   ########.fr       */
+/*   Updated: 2024/11/12 19:35:37 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ BtcExchange::~BtcExchange()
 {
 }
 
-float stringToFloat(const std::string &str)
+float	BtcExchange::stringToFloat(const std::string &str)
 {
     std::stringstream ss(str);
     float result;
@@ -41,7 +41,7 @@ float stringToFloat(const std::string &str)
     return result;
 }
 
-int stringToInt(const std::string &str)
+int	BtcExchange::stringToInt(const std::string &str)
 {
     std::stringstream ss(str);
     int result;
@@ -51,7 +51,7 @@ int stringToInt(const std::string &str)
     return result;
 }
 
-void    parseFileLine(std::string date, float value)
+void	BtcExchange::parseFileLine(std::string date, float value)
 {
     bool error = false;
     
@@ -95,7 +95,7 @@ void    parseFileLine(std::string date, float value)
     }
 }
 
-bool    getBTC(const std::map<std::string, float> &data, std::string infile)
+bool	BtcExchange::getBTC(const std::map<std::string, float> &data, std::string infile)
 {
     std::ifstream file(infile.c_str());
     if (!file.is_open())
@@ -133,13 +133,16 @@ bool    getBTC(const std::map<std::string, float> &data, std::string infile)
                 }
                 parseFileLine(date, fvalue);
                 std::map<std::string, float>::const_iterator it = data.lower_bound(date); // position of map that has string not less than date
-				// if (it == data.begin() || (it != data.end() && it->first != date))
-				// 	--it;
+		        // if (it == data.begin() || (it != data.end() && it->first != date))
+			    //     --it;
+                //std::cout << "Date from data: " << it->first << " Value from data: " << it->second << std::endl;
+                if (it == data.end())
+                    --it;
                 std::cout << date << " => " << fvalue << " = " << it->second * fvalue << std::endl;
             }
             catch(const std::exception& e)
             {
-                if (linecount > 0) // ?
+                if (linecount > 0)
                     std::cerr << e.what() << '\n';
             }
             linecount++;
@@ -150,7 +153,7 @@ bool    getBTC(const std::map<std::string, float> &data, std::string infile)
     return false; // ?
 }
 
-void    parseDate(std::string date)
+void	BtcExchange::parseDate(std::string date)
 {
     for (int i = 0; i < (int)date.length(); i++)
     {
@@ -174,7 +177,7 @@ void    parseDate(std::string date)
     }
 }
 
-bool    BtcExchange::getCSV(std::map<std::string, float> &data)
+bool	BtcExchange::BtcExchange::getCSV(std::map<std::string, float> &data)
 {
     std::ifstream file("data.csv");
     if (!file.is_open())
@@ -209,7 +212,6 @@ bool    BtcExchange::getCSV(std::map<std::string, float> &data)
 
 void    BtcExchange::btc(std::string argv)
 {
-    (void)argv;
     std::map<std::string, float> data;
 
     if (!getCSV(data))
