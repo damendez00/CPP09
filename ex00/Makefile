@@ -6,13 +6,13 @@
 #    By: damendez <damendez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 14:54:13 by damendez          #+#    #+#              #
-#    Updated: 2024/10/29 14:54:42 by damendez         ###   ########.fr        #
+#    Updated: 2024/12/16 16:22:42 by damendez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= btc
 
-SRC_FILES	= main.cpp BitcoinExchange.cpp
+SRC_FILES	= main.cpp
 
 HEADER		= BitcoinExchange.hpp
 
