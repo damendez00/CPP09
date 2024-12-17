@@ -6,11 +6,21 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:34:53 by damendez          #+#    #+#             */
-/*   Updated: 2024/12/16 17:45:58 by damendez         ###   ########.fr       */
+/*   Updated: 2024/12/17 18:50:20 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "BitcoinExchange.hpp"
+
+// bool    isValidValue(const std::string& valueStr) {}
+
+bool    isValidDate(const std::string& date) {
+    if (date.size() != 10 || date[4] != '-' || date[7] != '-') {
+        std::cerr << "Error: bad input => " << date << std::endl;
+        return false;
+    }
+    return true;
+}
 
 void    processInput(const std::string& fileName, const std::map<std::string, float>& db) {
 
@@ -26,11 +36,18 @@ void    processInput(const std::string& fileName, const std::map<std::string, fl
         std::string date, valueStr;    
         
         // check for invalid date/value
-        std::getline(line, date, '|');
+        std::getline(stream, date, '|');
+        std::getline(stream, valueStr);
+
+        if (!isValidDate(date) || !isValidValue(valueStr))
+            continue;
+
+        float value = std::stof(valueStr);
         
-
         // find closest(greater) date
-
+        auto it = db.lower_bound(date);
+        // TO-DO
+        
         // calculate exchange rate and give expected output
     }
 
