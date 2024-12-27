@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:34:53 by damendez          #+#    #+#             */
-/*   Updated: 2024/12/22 20:13:55 by damendez         ###   ########.fr       */
+/*   Updated: 2024/12/27 15:36:26 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,19 +63,20 @@ void    processInput(const std::string& fileName, const std::map<std::string, fl
             std::cerr << "Error: bad input in input file => " << date << " | " << valueStr << std::endl;
             continue;
         }
-
         std::istringstream valueStream(valueStr);
         float value;
         valueStream >> value;
         
         // find closest(greater) date
         std::map<std::string, float>::const_iterator it = db.lower_bound(date);
-        if (it == db.begin())
-            it++;
-        else if (it == db.end()) {
+        std::cout << "db date = " << it->first << " | value = " << it->second << std::endl;
+        if (it == db.end()) {
             std::cerr << "Error: no valid date found for input date " << date << std::endl;
             continue;
         }
+        std::cout << "db date = " << it->first << " | value = " << it->second << std::endl;
+        if (it == db.begin())
+            it++;
         
         // calculate exchange rate and give expected output
         float exchangeRate = it->second;
@@ -108,8 +109,10 @@ void    loadDb(const std::string& fileName, std::map<std::string, float>& db) {
         if (isValidDate(date) && isValidValue(valueStr)) {
             float value = myStof(valueStr);
             db[date] = value;
-        }   
+        }
     }
+    if (db.empty())
+        throw std::runtime_error("Error: no valid data found in database.");
 }
 
 int main(int argc, char *argv[]) {
