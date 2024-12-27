@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:34:53 by damendez          #+#    #+#             */
-/*   Updated: 2024/12/27 15:36:26 by damendez         ###   ########.fr       */
+/*   Updated: 2024/12/27 15:51:58 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,13 @@ void    processInput(const std::string& fileName, const std::map<std::string, fl
         
         // find closest(greater) date
         std::map<std::string, float>::const_iterator it = db.lower_bound(date);
-        std::cout << "db date = " << it->first << " | value = " << it->second << std::endl;
         if (it == db.end()) {
             std::cerr << "Error: no valid date found for input date " << date << std::endl;
             continue;
         }
-        std::cout << "db date = " << it->first << " | value = " << it->second << std::endl;
         if (it == db.begin())
             it++;
-        
+            
         // calculate exchange rate and give expected output
         float exchangeRate = it->second;
         std::cout << date << " => " << value << " = " << value * exchangeRate << std::endl;
@@ -102,9 +100,7 @@ void    loadDb(const std::string& fileName, std::map<std::string, float>& db) {
 
         // if date and value are valid add to db map
         date = trim(date);
-        std::cout << "data.csv date = " << date;
         valueStr = trim(valueStr);
-        std::cout << " | value = " << valueStr << std::endl;
 
         if (isValidDate(date) && isValidValue(valueStr)) {
             float value = myStof(valueStr);
