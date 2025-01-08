@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:34:53 by damendez          #+#    #+#             */
-/*   Updated: 2025/01/08 16:50:33 by damendez         ###   ########.fr       */
+/*   Updated: 2025/01/08 17:47:03 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ void    processInput(const std::string& fileName, const std::map<std::string, fl
             std::cerr << "Error: no valid date found for input date " << date << std::endl;
             continue;
         }
+        if (it->first != date)
+            it--;
         if (it == db.begin())
             it++;
         
