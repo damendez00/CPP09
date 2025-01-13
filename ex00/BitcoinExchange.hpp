@@ -6,34 +6,38 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:54:47 by damendez          #+#    #+#             */
-/*   Updated: 2024/12/28 17:46:42 by damendez         ###   ########.fr       */
+/*   Updated: 2025/01/12 20:45:31 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BITCOINEXCHANGE_HPP
-#define BITCOINEXCHANGE_HPP
+#pragma once
 
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <cstdlib>
+#include <sstream>
 #include <string>
 #include <map>
 
-class BitcoinExchange 
+class BitcoinExchange
 {
+    typedef std::map<std::string, float> map;
     private:
-        BitcoinExchange(const BitcoinExchange& other);
-        BitcoinExchange &operator=(const BitcoinExchange& other);
-        
-        std::map<std::string, double> exchangeRates;
-
-        void loadDatabase(const std::string& dbFile);
-        double getExchangeRate(const std::string& date) const;
-        bool isValidDate(const std::string& date) const;
-        bool isValidValue(const std::string& value) const;
-        double stod(const std::string& str) const;
-
+        map data;
     public:
-        BitcoinExchange(const std::string& dbFile);
-        void processInputFile(const std::string& inputFile);
+        BitcoinExchange();
+        BitcoinExchange(const BitcoinExchange& src);
+        BitcoinExchange &operator=(const BitcoinExchange& src);
         ~BitcoinExchange();
+
+        map::size_type data_size() const;
+        map::const_iterator operator[](map::size_type pos) const;
+        map::value_type::second_type operator[](std::string key) const;
+
+        void append(std::string line);
+        void append(std::string key, float value);
+        void append(std::map<std::string, float>);
 };
 
-#endif // BITCOINEXCHANGE_HPP
+std::ostream &operator<<(std::ostream &os, const BitcoinExchange &be);
