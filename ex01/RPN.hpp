@@ -6,34 +6,38 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 14:59:07 by damendez          #+#    #+#             */
-/*   Updated: 2024/12/28 16:26:16 by damendez         ###   ########.fr       */
+/*   Updated: 2025/01/17 20:01:39 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #pragma once
 
+#include <stack>
 #include <iostream>
 #include <sstream>
-#include <string>
-#include <stack>
 #include <stdexcept>
+#include <string>
 
-class RPN 
+enum Operation
 {
-    private:        
-        RPN(const RPN &other);
-        RPN &operator=(const RPN &other);
-        
-        std::string     _expression;
-        std::stack<int> _stack;
+    ADD = '+',
+    SUB = '-',
+    DIV = '/',
+    MUL = '*'
+};
 
-        void    _processToken(const std::string &token);
-        bool    _isOperator(const std::string &token) const;
-        int     _applyOperator(const std::string &token, int a, int b) const;
-        int     _stoi(const std::string &str) const;
-        
+class RPN: public std::stack<int>
+{
     public:
-        RPN(const std::string &expression);
+        RPN();
+        RPN(const RPN &src);
+        RPN &operator=(const RPN &src);
         ~RPN();
-        int evaluate();
+        void calculate(Operation operation);
+        void add(std::string stack_element);
+        int add(int v1, int v2);
+        int substract(int v1, int v2);
+        int multiply(int v1, int v2);
+        int divide(int v1, int v2);
 };

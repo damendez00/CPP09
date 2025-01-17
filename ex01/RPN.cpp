@@ -6,55 +6,83 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:46:43 by damendez          #+#    #+#             */
-/*   Updated: 2024/12/28 16:38:18 by damendez         ###   ########.fr       */
+/*   Updated: 2025/01/17 20:02:27 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "RPN.hpp"
 
-RPN::RPN(const std::string& expression) : _expression(expression) {}
+RPN::RPN(): std::stack<int>() {}
+
+RPN::RPN(const RPN &src): std::stack<int>(src) {}
+
+RPN &RPN::operator=(const RPN &src)
+{
+    if (this != &src)
+        std::stack<int>::operator=(src);
+    return *this;
+}
 
 RPN::~RPN() {}
 
-int     RPN::evaluate() {
-    std::istringstream iss(_expression);
-    std::string token;
-    while (iss >> token)
-        _processToken(token);
-    if (_stack.size() != 1)
-        throw std::runtime_error("Error: Invalid expression");
-    return _stack.top();
-}
+void RPN::calculate(Operation oper)
+{
+    if (this->size() < 2) {
+        throw std::logic_error("Error: Invalid input format");
+    }
+    int v1;
+    int v2;
 
-void    RPN::_processToken(const std::string& token) {
-    if (_isOperator(token)) {
-        if (_stack.size() < 2)
-            throw std::runtime_error("Error: Invalid expression");
-        int b = _stack.top(); _stack.pop();
-        int a = _stack.top(); _stack.pop();
-        int result = _applyOperator(token, a, b);
-        _stack.push(result);
-    } else {
-        int value = _stoi(token);
-        _stack.push(value);
+    int (RPN::*operation[4])(int, int) = {&RPN::add, &RPN::substract, &RPN::multiply, &RPN::divide};
+    char operations[5] = "+-*/";
+    v2 = this->top();
+    this->pop();
+    v1 = this->top();
+    this->pop();
+    for (int i = 0; i < 5; ++i) 
+    {
+        if (operations[i] == oper) 
+        {
+            (this->*(operation[i]))(v1, v2);
+            break ;
+        }
     }
 }
 
-bool    RPN::_isOperator(const std::string& token) const {
-    return token == "+" || token == "-" || token == "*" || token == "/";
-}
-
-int     RPN::_applyOperator(const std::string& token, int a, int b) const {
-    if (token == "+") return a + b;
-    else if (token == "-") return a - b;
-    else if (token == "*") return a * b;
-    else if (token == "/") return a / b;
-    throw std::runtime_error("Error: Unknown operator");
-}
-
-int     RPN::_stoi(const std::string& str) const {
-    std::istringstream string(str);
+void RPN::add(std::string stack_element)
+{
+    if (stack_element.size() != 1) {
+        throw std::invalid_argument("Error: Invalid argument in input");
+    }
+    std::stringstream ss;
+    ss << stack_element;
     int value;
-    string >> value;
-    return value;
+    ss >> value;
+    if (ss.fail())
+        throw std::invalid_argument("Error: Invalid argument in input");
+    this->push(value);
+}
+
+int  RPN::add(int v1, int v2)
+{
+    this->push(v1 + v2);
+    return v1 + v2;
+}
+
+int  RPN::substract(int v1, int v2)
+{
+    this->push(v1 - v2);
+    return v1 - v2;
+}
+
+int  RPN::multiply(int v1, int v2)
+{
+    this->push(v1 * v2);
+    return v1 * v2;
+}
+
+int  RPN::divide(int v1, int v2)
+{
+    this->push(v1 / v2);
+    return v1 / v2;
 }
