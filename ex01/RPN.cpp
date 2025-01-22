@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:46:43 by damendez          #+#    #+#             */
-/*   Updated: 2025/01/17 20:02:27 by damendez         ###   ########.fr       */
+/*   Updated: 2025/01/22 14:36:22 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void RPN::calculate(Operation oper)
     int v1;
     int v2;
 
-    int (RPN::*operation[4])(int, int) = {&RPN::add, &RPN::substract, &RPN::multiply, &RPN::divide};
+    void (RPN::*operation[4])(int, int) = {&RPN::add, &RPN::substract, &RPN::multiply, &RPN::divide};
     char operations[5] = "+-*/";
     v2 = this->top();
     this->pop();
@@ -63,26 +63,22 @@ void RPN::add(std::string stack_element)
     this->push(value);
 }
 
-int  RPN::add(int v1, int v2)
+void  RPN::add(int v1, int v2)
 {
     this->push(v1 + v2);
-    return v1 + v2;
 }
 
-int  RPN::substract(int v1, int v2)
+void  RPN::substract(int v1, int v2)
 {
     this->push(v1 - v2);
-    return v1 - v2;
 }
 
-int  RPN::multiply(int v1, int v2)
+void  RPN::multiply(int v1, int v2)
 {
     this->push(v1 * v2);
-    return v1 * v2;
 }
 
-int  RPN::divide(int v1, int v2)
+void  RPN::divide(int v1, int v2)
 {
     this->push(v1 / v2);
-    return v1 / v2;
 }

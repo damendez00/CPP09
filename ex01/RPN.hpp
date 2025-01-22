@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 14:59:07 by damendez          #+#    #+#             */
-/*   Updated: 2025/01/17 20:01:39 by damendez         ###   ########.fr       */
+/*   Updated: 2025/01/22 14:34:34 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ class RPN: public std::stack<int>
         ~RPN();
         void calculate(Operation operation);
         void add(std::string stack_element);
-        int add(int v1, int v2);
-        int substract(int v1, int v2);
-        int multiply(int v1, int v2);
-        int divide(int v1, int v2);
+        void add(int v1, int v2);
+        void substract(int v1, int v2);
+        void multiply(int v1, int v2);
+        void divide(int v1, int v2);
 };
