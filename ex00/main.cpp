@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:34:53 by damendez          #+#    #+#             */
-/*   Updated: 2025/01/22 14:46:21 by damendez         ###   ########.fr       */
+/*   Updated: 2025/01/23 15:14:24 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,63 +20,6 @@
 #ifndef DB_FILE
 # define DB_FILE "./data.csv"
 #endif
-
-void check_key(std::string key) {
-        std::stringstream ss(key);
-        std::string token;
-        int year;
-        int month;
-        int day;
-
-        int pos = 0;
-        std::time_t t = std::time(0);
-        std::tm* now = std::localtime(&t);
-
-        static const int daysInMonths[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-        while (std::getline(ss, token, '-')) {
-                std::stringstream key(token);
-                switch (pos)
-                {
-                        case 0:
-                                key >> year;
-                                if (key.fail() || !key.eof())
-                                        throw std::logic_error("check date");
-                                if (token.length() != 4 ||
-                                        year > now->tm_year + 1900 ||
-                                        year < 2009)
-                                        throw std::logic_error("check date");
-                                pos++;
-                                continue;
-                        case 1:
-                                key >> month;
-                                if (key.fail() || !key.eof())
-                                        throw std::logic_error("check date");
-                                if (token.length() != 2 ||
-                                        (year == now->tm_year && month > now->tm_mon + 1))
-                                        throw std::logic_error("check date");
-                                if (month > 12 || month < 1)
-                                        throw std::logic_error("check date");
-                                pos++;
-                                continue;
-                        case 2:
-                                key >> day;
-                                if (key.fail() || !key.eof())
-                                        throw std::logic_error("check date");
-                                if (token.length() != 2 || (year == now->tm_year + 1900 && month == now->tm_mon + 1 && day > now->tm_mday))
-                                        throw std::logic_error("check date");
-                                if (year == 2009 && (month < 1 || (month == 1 && day < 02)))
-                                        throw std::logic_error("check date");
-                                if (day < 1 || day > daysInMonths[month - 1])
-                                        throw std::logic_error("check date");
-                                pos++;
-                                continue;
-                        default:
-                                throw std::logic_error("check date");
-                                continue;
-                        pos++;
-                }
-        }
-}
 
 void parseInput(BitcoinExchange &data, const char* inputFile)
 {
@@ -103,23 +46,23 @@ void parseInput(BitcoinExchange &data, const char* inputFile)
                 key.erase(key.end() - 1);
                 try {
                     ss >> value;
-                    check_key(key);
+                    data.check_key(key);
                 } catch (std::exception &e) {
-                        std::cerr << "Error: Bad input on key " << key << std::endl;
+                        std::cerr << "Error: Bad input from input file on key " << key << std::endl;
                         continue;
                 }
                 if (ss.fail()) {
-                        std::cerr << "Error: Bad input on key" << key << std::endl;
+                        std::cerr << "Error: Bad input from input file on key" << key << std::endl;
                         continue;
                 }
                 if (value > 1000)
                 {
-                        std::cerr << "Error: too large a number => " << value << std::endl;
+                        std::cerr << "Error: Too large a number => " << value << std::endl;
                         continue;
                 }
                 if (value < 0)
                 {
-                        std::cerr << "Error: not a positive number => " << value << std::endl;
+                        std::cerr << "Error: Not a positive number => " << value << std::endl;
                         continue;
                 }
                 std::cout << key << " => " << value <<  " = " << value * data[key] << std::endl;

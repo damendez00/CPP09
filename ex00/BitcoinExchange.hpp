@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:54:47 by damendez          #+#    #+#             */
-/*   Updated: 2025/01/16 16:23:47 by damendez         ###   ########.fr       */
+/*   Updated: 2025/01/23 15:09:49 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@
 # include <sstream>
 # include <string>
 # include <iomanip>
+
+#include <iostream>
+#include <fstream>
+#include <exception>
+#include <cstdlib>
+#include <ctime>
 
 class BitcoinExchange
 {
@@ -36,6 +42,7 @@ class BitcoinExchange
 
                 void append(std::string key, float value);
                 void append(std::string line);
+                void check_key(std::string key);
 };
 
 std::ostream &operator<<(std::ostream &os, const BitcoinExchange &be);
