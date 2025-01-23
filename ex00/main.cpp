@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:34:53 by damendez          #+#    #+#             */
-/*   Updated: 2025/01/23 15:14:24 by damendez         ###   ########.fr       */
+/*   Updated: 2025/01/23 15:55:07 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ void parseInput(BitcoinExchange &data, const char* inputFile)
                     ss >> value;
                     data.check_key(key);
                 } catch (std::exception &e) {
-                        std::cerr << "Error: Bad input from input file on key " << key << std::endl;
+                        std::cerr << "Error: Bad input on line " << line << std::endl;
                         continue;
                 }
                 if (ss.fail()) {
-                        std::cerr << "Error: Bad input from input file on key" << key << std::endl;
+                        std::cerr << "Error: Bad input on line " << line << std::endl;
                         continue;
                 }
                 if (value > 1000)
