@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:22:32 by damendez          #+#    #+#             */
-/*   Updated: 2025/01/22 14:57:50 by damendez         ###   ########.fr       */
+/*   Updated: 2025/01/27 17:13:14 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ int main(int argc, const char *argv[])
         if (argc < 2)
         {
                 std::cout << "Need at least one argument for the program" << std::endl;
-                return 0;
+                return 1;
         }
 
-        // vVector container sort
+        // vector container sort
         try {
                 start = std::clock();
                 vector_container = build_container<std::vector<int> >(&argv[1]);
@@ -47,7 +47,7 @@ int main(int argc, const char *argv[])
         try {
                 start = std::clock();
                 list_container = build_container<std::list<int> >(&argv[1]);
-                mergeInsertSort(vector_container);
+                mergeInsertSort(list_container);
                 finish = std::clock();
                 std::cout << "Time to process a range of 5 elements with std::list<int>: "
                         << (float)(finish - start)/CLOCKS_PER_SEC * 1000000 << " us" << std::endl;
