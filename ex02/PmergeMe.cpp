@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:22:27 by damendez          #+#    #+#             */
-/*   Updated: 2025/01/22 15:06:07 by damendez         ###   ########.fr       */
+/*   Updated: 2025/01/27 18:55:55 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,40 @@ std::ostream &operator<<(std::ostream &os, const std::list<int> &container)
                 os << *it << " ";
         }
         return os;
+}
+
+void mergeInsertSort(std::list<int> &list)
+{
+        if (list.size() <= 1)
+                return ;
+        
+        std::list<int>::iterator middle = list.begin();
+        std::advance(middle, list.size() / 2);
+
+        std::list<int> left(list.begin(), middle);
+        std::list<int> right(middle, list.end());
+
+        mergeInsertSort(left);
+        mergeInsertSort(right);
+
+        std::list<int>::iterator leftIt = left.begin();
+        std::list<int>::iterator rightIt = right.begin();
+        std::list<int>::iterator numsIt = list.begin();
+
+        while (leftIt != left.end() && rightIt != right.end())
+        {
+                if (*leftIt < *rightIt)
+                        *numsIt++ = *leftIt++;
+                else
+                        *numsIt++ = *rightIt++;
+        }
+
+        while (leftIt != left.end())
+        {
+                *numsIt++ = *leftIt++;
+        }
+        while (rightIt != right.end())
+        {
+                *numsIt++ = *rightIt++;
+        }
 }

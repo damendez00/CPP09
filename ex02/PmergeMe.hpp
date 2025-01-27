@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:22:24 by damendez          #+#    #+#             */
-/*   Updated: 2025/01/22 14:55:42 by damendez         ###   ########.fr       */
+/*   Updated: 2025/01/27 18:56:04 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,39 +29,41 @@ bool find_duplicate(const Container &nums, int new_value)
         return false;
 }
 
-template <typename Container>
-void mergeInsertSort(Container &nums)
-{
-        if (nums.size() <= 1)
-                return ;
+// template <typename Container>
+// void mergeInsertSort(Container &nums)
+// {
+//         if (nums.size() <= 1)
+//                 return ;
 
-        Container left(nums.begin(), nums.begin() + nums.size() / 2);
-        Container right(nums.begin() + nums.size() / 2, nums.end());
+//         Container left(nums.begin(), nums.begin() + nums.size() / 2);
+//         Container right(nums.begin() + nums.size() / 2, nums.end());
 
-        mergeInsertSort(left);
-        mergeInsertSort(right);
+//         mergeInsertSort(left);
+//         mergeInsertSort(right);
 
-        typename Container::iterator leftIt = left.begin();
-        typename Container::iterator rightIt = right.begin();
-        typename Container::iterator numsIt = nums.begin();
+//         typename Container::iterator leftIt = left.begin();
+//         typename Container::iterator rightIt = right.begin();
+//         typename Container::iterator numsIt = nums.begin();
 
-        while (leftIt != left.end() && rightIt != right.end())
-        {
-                if (*leftIt < *rightIt)
-                        *numsIt++ = *leftIt++;
-                else
-                        *numsIt++ = *rightIt++;
-        }
+//         while (leftIt != left.end() && rightIt != right.end())
+//         {
+//                 if (*leftIt < *rightIt)
+//                         *numsIt++ = *leftIt++;
+//                 else
+//                         *numsIt++ = *rightIt++;
+//         }
 
-        while (leftIt != left.end())
-        {
-                *numsIt++ = *leftIt++;
-        }
-        while (rightIt != right.end())
-        {
-                *numsIt++ = *rightIt++;
-        }
-}
+//         while (leftIt != left.end())
+//         {
+//                 *numsIt++ = *leftIt++;
+//         }
+//         while (rightIt != right.end())
+//         {
+//                 *numsIt++ = *rightIt++;
+//         }
+// }
+
+void mergeInsertSort(std::list<int> &list);
 
 template <typename Container>
 Container build_container(const char **args)
