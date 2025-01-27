@@ -54,9 +54,45 @@ std::ostream &operator<<(std::ostream &os, const std::list<int> &container)
         return os;
 }
 
+void mergeInsertSort(std::vector<int> &vec)
+{
+        if (vec.size() <= 1)
+                return ;
+        
+        std::vector<int>::iterator middle = vec.begin() + vec.size() / 2;
+
+        std::vector<int> left(vec.begin(), middle);
+        std::vector<int> right(middle, vec.end());
+
+        mergeInsertSort(left);
+        mergeInsertSort(right);
+
+        std::vector<int>::iterator leftIt = left.begin();
+        std::vector<int>::iterator rightIt = right.begin();
+        std::vector<int>::iterator numsIt = vec.begin();
+
+        while (leftIt != left.end() && rightIt != right.end())
+        {
+                if (*leftIt < *rightIt)
+                        *numsIt++ = *leftIt++;
+                else
+                        *numsIt++ = *rightIt++;
+        }
+
+        while (leftIt != left.end())
+        {
+                *numsIt++ = *leftIt++;
+        }
+        while (rightIt != right.end())
+        {
+                *numsIt++ = *rightIt++;
+        }
+}
+
+
 void mergeInsertSort(std::list<int> &list)
 {
-        if (list.size() <= 1)
+        if (list.size() == 1)
                 return ;
         
         std::list<int>::iterator middle = list.begin();
