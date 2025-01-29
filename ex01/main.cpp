@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:31:25 by damendez          #+#    #+#             */
-/*   Updated: 2025/01/17 19:37:42 by damendez         ###   ########.fr       */
+/*   Updated: 2025/01/29 18:40:55 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ int main (int argc, char *argv[])
 {
     RPN int_storage;
 
-    if (argc < 2)
+    if (argc != 2)
     {
-        std::cout << "Error: not enough arguments, proper usage: ./RPN <input>." << std::endl;
-        return 0;
+        std::cerr << "Error: not enough arguments, proper usage: ./RPN <input>." << std::endl;
+        return 1;
     }
     try {
         parseInput(int_storage, argv[1]);
