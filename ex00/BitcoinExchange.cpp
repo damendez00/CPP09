@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:35:58 by damendez          #+#    #+#             */
-/*   Updated: 2025/01/23 15:21:57 by damendez         ###   ########.fr       */
+/*   Updated: 2025/01/29 18:09:12 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void BitcoinExchange::check_key(std::string key)
         while (std::getline(ss, token, '-')) {
                 std::stringstream key(token);
                 switch (pos)
-                {
+                { 
                         case 0:
                                 key >> year;
                                 if (key.fail() || !key.eof())
@@ -140,6 +140,8 @@ void BitcoinExchange::check_key(std::string key)
                         pos++;
                 }
         }
+        if (pos != 3)
+                throw std::logic_error("check date");
 }
 
 std::ostream &operator<<(std::ostream &os, const BitcoinExchange &be)
