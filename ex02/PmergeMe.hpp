@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:22:24 by damendez          #+#    #+#             */
-/*   Updated: 2025/01/27 20:22:52 by damendez         ###   ########.fr       */
+/*   Updated: 2025/01/30 16:58:54 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ bool find_duplicate(const Container &nums, int new_value)
         }
         return false;
 }
-
-
 
 template <typename Container>
 Container build_container(const char **args)
