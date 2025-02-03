@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:46:43 by damendez          #+#    #+#             */
-/*   Updated: 2025/01/29 18:51:46 by damendez         ###   ########.fr       */
+/*   Updated: 2025/02/03 19:26:10 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ RPN::~RPN() {}
 
 void RPN::calculate(Operation oper)
 {
-    if (this->size() < 2) {
+    if (this->size() != 2) {
         throw std::logic_error("Error: Invalid input format");
     }
     int v1;
