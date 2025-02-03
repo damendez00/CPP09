@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:34:53 by damendez          #+#    #+#             */
-/*   Updated: 2025/01/23 15:55:07 by damendez         ###   ########.fr       */
+/*   Updated: 2025/02/03 17:25:09 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@ void parseInput(BitcoinExchange &data, const char* inputFile)
                         continue;
                 }
                 std::getline(ss, key, '|');
+		if (key.empty()) {
+                        std::cerr << "Error: Bad input on line " << line << std::endl;
+                        continue;
+                }
                 if (key == "date ")
                         continue;
                 key.erase(key.end() - 1);
