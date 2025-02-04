@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:46:43 by damendez          #+#    #+#             */
-/*   Updated: 2025/02/03 19:26:10 by damendez         ###   ########.fr       */
+/*   Updated: 2025/02/04 18:57:29 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void RPN::calculate(Operation oper, size_t &oper_count)
     this->pop();
     for (int i = 0; i < 5; ++i) 
     {
-        if (operations[i] == oper) 
+        if (operations[i] == oper)
         {
             if (v2 == 0 && operations[i] == '/')
                 throw std::runtime_error("Error: Tried to divide by 0");

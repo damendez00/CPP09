@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:22:27 by damendez          #+#    #+#             */
-/*   Updated: 2025/01/30 17:49:00 by damendez         ###   ########.fr       */
+/*   Updated: 2025/02/04 18:58:51 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,35 +125,53 @@ void mergeInsertSort(std::list<int> &list)
                 return ;
 
         // Pair up and compare elements
-        std::list<std::pair<int, int>> pairs;
-        auto it = list.begin();
+        std::list<int> pairs;
+        std::list<int>::const_iterator it = list.begin();
         while (it != list.end())
         {
                 int first = *it;
                 ++it;
+                if (it == list.end()) { // Handle odd elements
+                        pairs.push_back(first);
+                        break;
+                }
+                int second = *it;
+                ++it;
                 if (it != list.end())
                 {
-                        int second = *it;
-                        ++it;
+
                         if (first < second)
-                                pairs.push_back(std::make_pair(first, second));
+                        {
+                                pairs.push_back(first);
+                                pairs.push_back(second);
+                        }
                         else
-                                pairs.push_back(std::make_pair(second, first));
+                        {
+                                pairs.push_back(second);
+                                pairs.push_back(first);
+                        }
                 }
                 else
-                {
-                        pairs.push_back(std::make_pair(first, first));
-                }
+                        pairs.push_back(first);
         }
+
+        std::cout << "yea" << std::endl;
 
         // Sort pairs
         std::list<int> left, right;
-        for (const auto &p : pairs)
+        for (std::list<int>::const_iterator p = pairs.begin(); p != pairs.end(); p++)
         {
-                left.push_back(p.first);
-                right.push_back(p.second);
+                std::cout << *p << std::endl;
+                int first = *p;
+                ++p;
+                left.push_back(first);
+                if (p == pairs.end())
+                        break;
+                int second = *p;
+                right.push_back(second);
         }
 
+        
         mergeInsertSort(left);
         mergeInsertSort(right);
 
