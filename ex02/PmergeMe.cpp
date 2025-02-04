@@ -93,8 +93,8 @@ void mergeInsertSort(std::vector<int> &vec)
                         right.push_back(pairs[i + 1]);
         }
         
-        std::cout << "Pairs: ";
-        for (const auto &p : pairs)
+        //std::cout << "Pairs: ";
+        for (const auto &p : pairs) // TO-CHANGE
                 std::cout << p << " ";
         std::cout << std::endl;
         std::cout << "Left before sorting left: " << left << std::endl;
@@ -120,6 +120,7 @@ void mergeInsertSort(std::vector<int> &vec)
 
 void mergeInsertSort(std::list<int> &list)
 {
+        std::cout << "list size: " << list.size() << std::endl;
         if (list.size() <= 1)
                 return ;
 

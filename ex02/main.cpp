@@ -36,7 +36,7 @@ int main(int argc, const char *argv[])
                 mergeInsertSort(vector_container);
                 std::cout << "After: " << vector_container << std::endl;
                 finish = std::clock();
-                std::cout << "Time to process a range of 5 elements with std::vector<int>: "
+                std::cout << "Time to process a range of " << vector_container.size() << " elements with std::vector<int>: "
                         << (float)(finish - start)/CLOCKS_PER_SEC * 1000000 << " us" << std::endl;
         } catch (const std::exception &e) {
                 std::cout << "Error: " << e.what() << std::endl;
@@ -49,8 +49,9 @@ int main(int argc, const char *argv[])
                 list_container = build_container<std::list<int> >(&argv[1]);
                 mergeInsertSort(list_container);
                 finish = std::clock();
-                std::cout << "Time to process a range of 5 elements with std::list<int>: "
+                std::cout << "Time to process a range of " << list_container.size() << " elements with std::list<int>: "
                         << (float)(finish - start)/CLOCKS_PER_SEC * 1000000 << " us" << std::endl;
+                std::cout << "After: " << list_container << ", size: " << list_container.size() << std::endl;
         } catch (const std::exception &e) {
                 std::cout << "Error: " << e.what() << std::endl;
                 return 1;
