@@ -105,18 +105,18 @@ void BitcoinExchange::check_key(std::string key)
                                 key >> year;
                                 if (key.fail() || !key.eof())
                                         throw std::logic_error("check date");
-                                if (token.length() != 4 ||
-                                        year > now->tm_year + 1900 ||
-                                        year < 2009)
+                                if (token.length() != 4 || year > now->tm_year + 1900 || year < 2009)
                                         throw std::logic_error("check date");
                                 pos++;
                                 continue;
                         case 1:
                                 key >> month;
+                                //std::cout << "token: " << token << std::endl;
+                                //std::cout << month << " now month " << now->tm_mon + 1 << std::endl;
+                                //std::cout << year << " now year " << now->tm_year + 1900 << std::endl;
                                 if (key.fail() || !key.eof())
                                         throw std::logic_error("check date");
-                                if (token.length() != 2 ||
-                                        (year == now->tm_year && month > now->tm_mon + 1))
+                                if (token.length() != 2 || (year == now->tm_year + 1900 && month > now->tm_mon + 1))
                                         throw std::logic_error("check date");
                                 if (month > 12 || month < 1)
                                         throw std::logic_error("check date");
