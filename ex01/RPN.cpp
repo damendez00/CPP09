@@ -25,7 +25,7 @@ RPN &RPN::operator=(const RPN &src)
 
 RPN::~RPN() {}
 
-void RPN::calculate(Operation oper)
+void RPN::calculate(Operation oper, size_t &oper_count)
 {
     if (this->size() != 2) {
         throw std::logic_error("Error: Invalid input format");
@@ -46,6 +46,7 @@ void RPN::calculate(Operation oper)
             if (v2 == 0 && operations[i] == '/')
                 throw std::runtime_error("Error: Tried to divide by 0");
             (this->*(operation[i]))(v1, v2);
+            oper_count++;
             break ;
         }
     }

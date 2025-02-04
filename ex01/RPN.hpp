@@ -34,7 +34,7 @@ class RPN: public std::stack<int>
         RPN(const RPN &src);
         RPN &operator=(const RPN &src);
         ~RPN();
-        void calculate(Operation operation);
+        void calculate(Operation oper, size_t &oper_count);
         void add(std::string stack_element);
         void add(int v1, int v2);
         void substract(int v1, int v2);
