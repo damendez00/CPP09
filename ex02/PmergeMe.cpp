@@ -94,14 +94,14 @@ void mergeInsertSort(std::vector<int> &vec)
         }
         
         //std::cout << "Pairs: ";
-        for (const auto &p : pairs) // TO-CHANGE
-                std::cout << p << " ";
-        std::cout << std::endl;
-        std::cout << "Left before sorting left: " << left << std::endl;
-        std::cout << "Right before sorting left: " << right << std::endl;
+        // for (const auto &p : pairs) // TO-CHANGE
+        //         std::cout << p << " ";
+        // std::cout << std::endl;
+        // std::cout << "Left before sorting left: " << left << std::endl;
+        // std::cout << "Right before sorting left: " << right << std::endl;
         mergeInsertSort(left);
-        std::cout << "Left before sorting right: " << left << std::endl;
-        std::cout << "Right before sorting right: " << right << std::endl;
+        // std::cout << "Left before sorting right: " << left << std::endl;
+        // std::cout << "Right before sorting right: " << right << std::endl;
         mergeInsertSort(right);
 
         // Merge left and right using binary insertion
@@ -120,71 +120,61 @@ void mergeInsertSort(std::vector<int> &vec)
 
 void mergeInsertSort(std::list<int> &list)
 {
-        std::cout << "list size: " << list.size() << std::endl;
-        if (list.size() <= 1)
-                return ;
+    if (list.size() <= 1)
+        return;
 
-        // Pair up and compare elements
-        std::list<int> pairs;
-        std::list<int>::const_iterator it = list.begin();
-        while (it != list.end())
-        {
-                int first = *it;
-                ++it;
-                if (it == list.end()) { // Handle odd elements
-                        pairs.push_back(first);
-                        break;
-                }
-                int second = *it;
-                ++it;
-                if (it != list.end())
-                {
-
-                        if (first < second)
-                        {
-                                pairs.push_back(first);
-                                pairs.push_back(second);
-                        }
-                        else
-                        {
-                                pairs.push_back(second);
-                                pairs.push_back(first);
-                        }
-                }
-                else
-                        pairs.push_back(first);
+    // Pair up and compare elements
+    std::list<int> pairs;
+    std::list<int>::const_iterator it = list.begin();
+    while (it != list.end())
+    {
+        int first = *it;
+        ++it;
+        if (it == list.end()) {
+            pairs.push_back(first);
+            break;
         }
-
-        std::cout << "yea" << std::endl;
-
-        // Sort pairs
-        std::list<int> left, right;
-        for (std::list<int>::const_iterator p = pairs.begin(); p != pairs.end(); p++)
+        int second = *it;
+        ++it;
+        if (first < second)
         {
-                std::cout << *p << std::endl;
-                int first = *p;
-                ++p;
-                left.push_back(first);
-                if (p == pairs.end())
-                        break;
-                int second = *p;
-                right.push_back(second);
+            pairs.push_back(first);
+            pairs.push_back(second);
         }
-
-        
-        mergeInsertSort(left);
-        mergeInsertSort(right);
-
-        // Merge left and right using binary insertion
-        list.clear();
-        for (const auto &val : left)
+        else
         {
-                auto pos = std::lower_bound(list.begin(), list.end(), val);
-                list.insert(pos, val);
+            pairs.push_back(second);
+            pairs.push_back(first);
         }
-        for (const auto &val : right)
-        {
-                auto pos = std::lower_bound(list.begin(), list.end(), val);
-                list.insert(pos, val);
-        }
+    }
+
+    // Split into left and right
+    std::list<int> left, right;
+    bool addToLeft = true;
+    for (std::list<int>::const_iterator val = pairs.begin(); val != pairs.end(); val++)
+    {
+        int num = *val;
+        if (addToLeft)
+            left.push_back(num);
+        else
+            right.push_back(num);
+        addToLeft = !addToLeft;
+    }
+
+    // Recursively sort left and right
+    mergeInsertSort(left);
+    mergeInsertSort(right);
+
+    // Merge left and right using binary insertion
+    list.clear();
+    for (const auto &val : left)
+    {
+        auto pos = std::lower_bound(list.begin(), list.end(), val);
+        list.insert(pos, val);
+    }
+    for (const auto &val : right)
+    {
+        auto pos = std::lower_bound(list.begin(), list.end(), val);
+        list.insert(pos, val);
+    }
 }
