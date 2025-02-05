@@ -18,18 +18,6 @@
 
 std::ostream &operator<<(std::ostream &os, const std::vector<int> &container)
 {
-        // if (container.size() > 5)
-        // {
-        //         std::vector<int>::const_iterator it = container.begin();
-        //         for (int i = 0; i < 4; i++)
-        //         {
-        //                 os << *it << " ";
-        //                 it++;
-        //         }
-        //         os << "... ";
-        //         os << container.back();
-        //         return os;
-        // }
         for (std::vector<int>::const_iterator it = container.begin(); it != container.end(); it++)
         {
                 os << *it << " ";
@@ -39,18 +27,6 @@ std::ostream &operator<<(std::ostream &os, const std::vector<int> &container)
 
 std::ostream &operator<<(std::ostream &os, const std::list<int> &container)
 {
-        // if (container.size() > 5)
-        // {
-        //         std::list<int>::const_iterator it = container.begin();
-        //         for (int i = 0; i < 4; i++)
-        //         {
-        //                 os << *it << " ";
-        //                 it++;
-        //         }
-        //         os << "... ";
-        //         os << container.back();
-        //         return os;
-        // }
         for (std::list<int>::const_iterator it = container.begin(); it != container.end(); it++)
         {
                 os << *it << " ";
@@ -93,28 +69,20 @@ void mergeInsertSort(std::vector<int> &vec)
                         right.push_back(pairs[i + 1]);
         }
         
-        //std::cout << "Pairs: ";
-        // for (const auto &p : pairs) // TO-CHANGE
-        //         std::cout << p << " ";
-        // std::cout << std::endl;
-        // std::cout << "Left before sorting left: " << left << std::endl;
-        // std::cout << "Right before sorting left: " << right << std::endl;
         mergeInsertSort(left);
-        // std::cout << "Left before sorting right: " << left << std::endl;
-        // std::cout << "Right before sorting right: " << right << std::endl;
         mergeInsertSort(right);
 
         // Merge left and right using binary insertion
         vec.clear();
-        for (const auto &val : left)
+        for (std::vector<int>::const_iterator val = left.begin(); val != left.end(); ++val)
         {
-                auto pos = std::lower_bound(vec.begin(), vec.end(), val);
-                vec.insert(pos, val);
+                std::vector<int>::iterator pos = std::lower_bound(vec.begin(), vec.end(), *val);
+                vec.insert(pos, *val);
         }
-        for (const auto &val : right)
+        for (std::vector<int>::const_iterator val = right.begin(); val != right.end(); ++val)
         {
-                auto pos = std::lower_bound(vec.begin(), vec.end(), val);
-                vec.insert(pos, val);
+                std::vector<int>::iterator pos = std::lower_bound(vec.begin(), vec.end(), *val);
+                vec.insert(pos, *val);
         }
 }
 
@@ -167,14 +135,14 @@ void mergeInsertSort(std::list<int> &list)
 
     // Merge left and right using binary insertion
     list.clear();
-    for (const auto &val : left)
+    for (std::list<int>::const_iterator val = left.begin(); val != left.end(); ++val)
     {
-        auto pos = std::lower_bound(list.begin(), list.end(), val);
-        list.insert(pos, val);
+        std::list<int>::iterator pos = std::lower_bound(list.begin(), list.end(), *val);
+        list.insert(pos, *val);
     }
-    for (const auto &val : right)
+    for (std::list<int>::const_iterator val = right.begin(); val != right.end(); ++val)
     {
-        auto pos = std::lower_bound(list.begin(), list.end(), val);
-        list.insert(pos, val);
+        std::list<int>::iterator pos = std::lower_bound(list.begin(), list.end(), *val);
+        list.insert(pos, *val);
     }
 }
