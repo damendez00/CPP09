@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:31:25 by damendez          #+#    #+#             */
-/*   Updated: 2025/01/29 18:40:55 by damendez         ###   ########.fr       */
+/*   Updated: 2025/02/06 18:35:06 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void parseInput(RPN &int_storage, std::string equation)
     size_t oper_count = 0;
     for (size_t i = 0; i < equation.size(); ++i)
     {
-        if (equation[i] == ADD || equation[i] == SUB || equation[i] == DIV || equation[i] == MUL) {
+        if (equation[i] == ADD || (equation[i] == SUB && i + 1 == ' ') || equation[i] == DIV || equation[i] == MUL) {
             int_storage.calculate((Operation)equation[i], oper_count);
         } else if (equation[i] != ' ' ) {
             std::string stack_element;
