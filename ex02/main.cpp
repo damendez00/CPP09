@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:22:32 by damendez          #+#    #+#             */
-/*   Updated: 2025/01/27 20:19:00 by damendez         ###   ########.fr       */
+/*   Updated: 2025/02/06 17:51:03 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int main(int argc, const char *argv[])
                 finish = std::clock();
                 std::cout << "Time to process a range of " << list_container.size() << " elements with std::list<int>: "
                         << (float)(finish - start)/CLOCKS_PER_SEC * 1000000 << " us" << std::endl;
-                std::cout << "After: " << list_container << std::endl;
         } catch (const std::exception &e) {
                 std::cout << "Error: " << e.what() << std::endl;
                 return 1;

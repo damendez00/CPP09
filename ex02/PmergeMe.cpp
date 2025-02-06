@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:22:27 by damendez          #+#    #+#             */
-/*   Updated: 2025/02/04 18:58:51 by damendez         ###   ########.fr       */
+/*   Updated: 2025/02/06 17:49:16 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,36 @@
 
 std::ostream &operator<<(std::ostream &os, const std::vector<int> &container)
 {
-        for (std::vector<int>::const_iterator it = container.begin(); it != container.end(); it++)
-        {
-                os << *it << " ";
+        if (container.size() <= 10) {
+                if (!container.empty()) {
+                        for (std::vector<int>::const_iterator it = container.begin(); it != container.end(); it++)
+                                os << *it << " ";                        
+                }
+        }
+        else {
+                std::vector<int>::const_iterator it = container.begin();
+                for (size_t i = 0; i < 4; i++)
+                        os << *(++it) << " ";
+                os << " [...] " << *(container.end() - 1);
         }
         return os;
 }
 
 std::ostream &operator<<(std::ostream &os, const std::list<int> &container)
 {
-        for (std::list<int>::const_iterator it = container.begin(); it != container.end(); it++)
-        {
-                os << *it << " ";
+        if (container.size() <= 10) {
+                if (!container.empty()) {
+                        for (std::list<int>::const_iterator it = container.begin(); it != container.end(); it++)
+                                os << *it << " ";
+                }
+        }
+        else {
+                std::list<int>::const_iterator it = container.begin();
+                for (size_t i = 0; i < 4; i++)
+                        os << *(++it) << " ";
+                std::list<int>::const_iterator last = container.end();
+                --last;
+                os << " [...] " << *last;
         }
         return os;
 }
