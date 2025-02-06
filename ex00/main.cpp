@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:34:53 by damendez          #+#    #+#             */
-/*   Updated: 2025/02/03 17:25:09 by damendez         ###   ########.fr       */
+/*   Updated: 2025/02/06 20:12:12 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void parseInput(BitcoinExchange &data, const char* inputFile)
                 key.erase(key.end() - 1);
                 try {
                     ss >> value;
+                    std::cout << value << std::endl;
                     data.check_key(key);
                 } catch (std::exception &e) {
                         std::cerr << "Error: Bad input on line " << line << std::endl;
@@ -59,13 +60,11 @@ void parseInput(BitcoinExchange &data, const char* inputFile)
                         std::cerr << "Error: Bad input on line " << line << std::endl;
                         continue;
                 }
-                if (value > 1000)
-                {
+                if (value > 1000) {
                         std::cerr << "Error: Too large a number => " << value << std::endl;
                         continue;
                 }
-                if (value < 0)
-                {
+                if (value < 0) {
                         std::cerr << "Error: Not a positive number => " << value << std::endl;
                         continue;
                 }

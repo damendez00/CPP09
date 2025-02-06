@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:54:47 by damendez          #+#    #+#             */
-/*   Updated: 2025/01/23 15:09:49 by damendez         ###   ########.fr       */
+/*   Updated: 2025/02/06 19:53:00 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,9 @@
 # include <sstream>
 # include <string>
 # include <iomanip>
-
-#include <iostream>
-#include <fstream>
-#include <exception>
-#include <cstdlib>
-#include <ctime>
+# include <exception>
+# include <cstdlib>
+# include <ctime>
 
 class BitcoinExchange
 {

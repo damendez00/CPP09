@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:35:58 by damendez          #+#    #+#             */
-/*   Updated: 2025/01/29 18:09:12 by damendez         ###   ########.fr       */
+/*   Updated: 2025/02/06 20:27:31 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,10 @@ void BitcoinExchange::check_key(std::string key)
         while (std::getline(ss, token, '-')) {
                 std::stringstream key(token);
                 switch (pos)
-                { 
+                {
                         case 0:
+                                std::cout << "year token length: " << token.length() << std::endl;
+                                std::cout << "year token: " << token << std::endl;
                                 key >> year;
                                 if (key.fail() || !key.eof())
                                         throw std::logic_error("check date");
@@ -110,10 +112,9 @@ void BitcoinExchange::check_key(std::string key)
                                 pos++;
                                 continue;
                         case 1:
+                                std::cout << "month token length: " << token.length() << std::endl;
+                                std::cout << "month token: " << token << std::endl;
                                 key >> month;
-                                //std::cout << "token: " << token << std::endl;
-                                //std::cout << month << " now month " << now->tm_mon + 1 << std::endl;
-                                //std::cout << year << " now year " << now->tm_year + 1900 << std::endl;
                                 if (key.fail() || !key.eof())
                                         throw std::logic_error("check date");
                                 if (token.length() != 2 || (year == now->tm_year + 1900 && month > now->tm_mon + 1))
@@ -123,6 +124,8 @@ void BitcoinExchange::check_key(std::string key)
                                 pos++;
                                 continue;
                         case 2:
+                                std::cout << "day token length: " << token.length() << std::endl;
+                                std::cout << "day token: " << token << std::endl;
                                 key >> day;
                                 if (key.fail() || !key.eof())
                                         throw std::logic_error("check date");
