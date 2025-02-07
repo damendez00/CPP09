@@ -35,8 +35,7 @@ void parseInput(BitcoinExchange &data, const char* inputFile)
                 std::string             key;
                 float                   value;
 
-                if (line.find('|') == line.npos)
-                {
+                if (line.find('|') == line.npos) {
                         std::cerr << "Error: Bad input on line " << line << std::endl;
                         continue;
                 }
@@ -47,10 +46,12 @@ void parseInput(BitcoinExchange &data, const char* inputFile)
                 }
                 if (key == "date ")
                         continue;
-                key.erase(key.end() - 1);
+                std::string::const_iterator last = key.end();
+                --last;
+                if (*last == ' ')
+                        key.erase(key.end() - 1);
                 try {
                     ss >> value;
-                    std::cout << value << std::endl;
                     data.check_key(key);
                 } catch (std::exception &e) {
                         std::cerr << "Error: Bad input on line " << line << std::endl;
@@ -80,16 +81,14 @@ void parseDb(BitcoinExchange &data)
         fs.open(DB_FILE, std::fstream::in);
         if (!fs.is_open())
                 throw std::logic_error("could not open database");
-        while (std::getline(fs, line)) {
+        while (std::getline(fs, line))
                 data.append(line);
-        }
         fs.close();        
 }
 
 int main(int argc, char *argv[])
 {
-        if (argc != 2)
-        {
+        if (argc != 2) {
                 std::cerr << "Error: not enough arguments, proper usage: ./btc <inputfile>.";
                 return 1;
         }

@@ -78,9 +78,7 @@ void BitcoinExchange::append(std::string line)
                         throw std::runtime_error("Bad input in db.");
         }
         else
-        {
                 throw std::runtime_error("Bad input in db.");
-        }
         append(key, value);
 }
 
@@ -102,8 +100,6 @@ void BitcoinExchange::check_key(std::string key)
                 switch (pos)
                 {
                         case 0:
-                                std::cout << "year token length: " << token.length() << std::endl;
-                                std::cout << "year token: " << token << std::endl;
                                 key >> year;
                                 if (key.fail() || !key.eof())
                                         throw std::logic_error("check date");
@@ -112,8 +108,6 @@ void BitcoinExchange::check_key(std::string key)
                                 pos++;
                                 continue;
                         case 1:
-                                std::cout << "month token length: " << token.length() << std::endl;
-                                std::cout << "month token: " << token << std::endl;
                                 key >> month;
                                 if (key.fail() || !key.eof())
                                         throw std::logic_error("check date");
@@ -124,8 +118,6 @@ void BitcoinExchange::check_key(std::string key)
                                 pos++;
                                 continue;
                         case 2:
-                                std::cout << "day token length: " << token.length() << std::endl;
-                                std::cout << "day token: " << token << std::endl;
                                 key >> day;
                                 if (key.fail() || !key.eof())
                                         throw std::logic_error("check date");

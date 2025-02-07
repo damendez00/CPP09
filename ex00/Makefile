@@ -24,7 +24,7 @@ DEP_FILES	= $(SRC_FILES:.cpp=.d)
 DEPS		= $(addprefix $(OBJ_DIR), $(DEP_FILES))
 
 CC			= c++
-CFLAGS		= -std=c++98 -Wall -Wextra -Werror -MMD -fsanitize=address -g
+CFLAGS		= -std=c++98 -Wall -Wextra -Werror -MMD -g
 RM			= rm -rf
 INCLUDE		= -I ./
 
