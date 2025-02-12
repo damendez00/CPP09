@@ -6,15 +6,11 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:22:27 by damendez          #+#    #+#             */
-/*   Updated: 2025/02/06 17:49:16 by damendez         ###   ########.fr       */
+/*   Updated: 2025/02/12 14:41:38 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
-#include <vector>
-#include <list>
-#include <algorithm>
-#include <iostream>
 
 std::ostream &operator<<(std::ostream &os, const std::vector<int> &container)
 {

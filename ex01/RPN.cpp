@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:46:43 by damendez          #+#    #+#             */
-/*   Updated: 2025/02/06 18:34:03 by damendez         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:27:14 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,7 @@ void RPN::calculate(Operation oper, size_t &oper_count)
 
 void RPN::add(std::string stack_element)
 {
-    // if (stack_element.size() != 1) {
-    //     throw std::invalid_argument("Error: Invalid argument in input");
-    // }
+    std::cout << stack_element << std::endl;
     std::stringstream ss;
     ss << stack_element;
     int value;

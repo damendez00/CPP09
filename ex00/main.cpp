@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:34:53 by damendez          #+#    #+#             */
-/*   Updated: 2025/02/06 20:12:12 by damendez         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:57:30 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void parseInput(BitcoinExchange &data, const char* inputFile)
                 }
                 std::cout << key << " => " << value <<  " = " << value * data[key] << std::endl;
         }
+        fs.close();
 }
 
 void parseDb(BitcoinExchange &data) 

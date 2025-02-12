@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 14:59:07 by damendez          #+#    #+#             */
-/*   Updated: 2025/02/06 18:35:12 by damendez         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:25:02 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <cctype>
+
 
 enum Operation
 {

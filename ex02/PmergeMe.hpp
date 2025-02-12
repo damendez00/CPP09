@@ -6,17 +6,17 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:22:24 by damendez          #+#    #+#             */
-/*   Updated: 2025/02/06 19:50:18 by damendez         ###   ########.fr       */
+/*   Updated: 2025/02/12 14:42:05 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
-
 # include <vector>
 # include <list>
 # include <iostream>
 # include <sstream>
 # include <ostream>
+# include <algorithm>
 
 template <typename Container>
 bool find_duplicate(const Container &nums, int new_value)
