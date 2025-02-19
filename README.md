@@ -9,14 +9,14 @@ A program that processes Bitcoin transactions based on historical data.
 
 **Features:**
 - Reads Bitcoin exchange rates from a CSV database
-- Processes input files with date|value pairs
+- Processes input files with date | value pairs
 - Validates input format and values
 - Calculates Bitcoin values based on historical rates
 
 **Usage:**
 ```bash
-make -C ex00
-./ex00/btc input.txt
+make
+./btc input.txt
 ```
 
 ### ex01: RPN Calculator
@@ -30,8 +30,8 @@ A Reverse Polish Notation calculator implementation.
 
 **Usage:**
 ```bash
-make -C ex01
-./ex01/RPN "3 4 + 2 *"
+make
+./RPN "3 4 + 2 *"
 ```
 
 ### ex02: PmergeMe
@@ -45,22 +45,11 @@ A sorting algorithm comparison between vector and list containers.
 
 **Usage:**
 ```bash
-make -C ex02
-./ex02/PmergeMe 3 5 9 1 2 8 7
-```
-
-## Compilation
-Each exercise has its own Makefile. To compile:
-```bash
-make -C ex00
-make -C ex01
-make -C ex02
+make
+./PmergeMe 3 5 9 1 2 8 7
 ```
 
 ## Requirements
 - C++ compiler (g++ or clang++)
 - Make
 - C++ Standard Library
-
-## Author
-damendez
