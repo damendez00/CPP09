@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:46:43 by damendez          #+#    #+#             */
-/*   Updated: 2025/02/11 15:27:14 by damendez         ###   ########.fr       */
+/*   Updated: 2025/02/19 19:34:35 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ RPN &RPN::operator=(const RPN &src)
 
 RPN::~RPN() {}
 
-void RPN::calculate(Operation oper, size_t &oper_count)
+void RPN::calculate(std::string oper, size_t &oper_count)
 {
-    if (this->size() != 2) {
+    if (this->size() < 2) {
         throw std::logic_error("Error: Invalid input format");
     }
     int v1;
     int v2;
-
+    
     void (RPN::*operation[4])(int, int) = {&RPN::add, &RPN::substract, &RPN::multiply, &RPN::divide};
     char operations[5] = "+-*/";
     v2 = this->top();
@@ -41,10 +41,8 @@ void RPN::calculate(Operation oper, size_t &oper_count)
     this->pop();
     for (int i = 0; i < 5; ++i) 
     {
-        if (operations[i] == oper)
+        if (operations[i] == oper[0])
         {
-            if (v2 == 0 && operations[i] == '/')
-                throw std::runtime_error("Error: Tried to divide by 0");
             (this->*(operation[i]))(v1, v2);
             oper_count++;
             break ;
@@ -54,9 +52,7 @@ void RPN::calculate(Operation oper, size_t &oper_count)
 
 void RPN::add(std::string stack_element)
 {
-    std::cout << stack_element << std::endl;
-    std::stringstream ss;
-    ss << stack_element;
+    std::stringstream ss(stack_element);
     int value;
     ss >> value;
     if (ss.fail())
@@ -64,22 +60,43 @@ void RPN::add(std::string stack_element)
     this->push(value);
 }
 
-void  RPN::add(int v1, int v2)
+void RPN::add(int v1, int v2)
 {
-    this->push(v1 + v2);
+    if ((v2 > 0 && v1 > std::numeric_limits<int>::max() - v2) ||
+        (v2 < 0 && v1 < std::numeric_limits<int>::min() - v2)) {
+        throw std::overflow_error("Error: Integer overflow in addition");
+    }
+    int num = v1 + v2;
+    this->push(num);
 }
 
-void  RPN::substract(int v1, int v2)
+void RPN::substract(int v1, int v2)
 {
-    this->push(v1 - v2);
+    if ((v2 < 0 && v1 > std::numeric_limits<int>::max() + v2) ||
+        (v2 > 0 && v1 < std::numeric_limits<int>::min() + v2)) {
+        throw std::overflow_error("Error: Integer overflow in subtraction");
+    }
+    int num = v1 - v2;
+    this->push(num);
 }
 
-void  RPN::multiply(int v1, int v2)
+void RPN::multiply(int v1, int v2)
 {
-    this->push(v1 * v2);
+    if (v1 != 0 && (v2 > std::numeric_limits<int>::max() / v1 || v2 < std::numeric_limits<int>::min() / v1)) {
+        throw std::overflow_error("Error: Integer overflow in multiplication");
+    }
+    int num = v1 * v2;
+    this->push(num);
 }
 
-void  RPN::divide(int v1, int v2)
+void RPN::divide(int v1, int v2)
 {
-    this->push(v1 / v2);
+    if (v2 == 0) {
+        throw std::runtime_error("Error: Tried to divide by 0");
+    }
+    if (v1 == std::numeric_limits<int>::min() && v2 == -1) {
+        throw std::overflow_error("Error: Integer overflow in division");
+    }
+    int num = v1 / v2;
+    this->push(num);
 }

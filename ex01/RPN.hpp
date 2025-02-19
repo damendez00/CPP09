@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 14:59:07 by damendez          #+#    #+#             */
-/*   Updated: 2025/02/11 15:25:02 by damendez         ###   ########.fr       */
+/*   Updated: 2025/02/19 19:17:33 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,7 @@
 #include <stdexcept>
 #include <string>
 #include <cctype>
-
-
-enum Operation
-{
-    ADD = '+',
-    SUB = '-',
-    DIV = '/',
-    MUL = '*'
-};
+#include <limits>
 
 class RPN: public std::stack<int>
 {
@@ -36,7 +28,7 @@ class RPN: public std::stack<int>
         RPN(const RPN &src);
         RPN &operator=(const RPN &src);
         ~RPN();
-        void calculate(Operation oper, size_t &oper_count);
+        void calculate(std::string oper, size_t &oper_count);
         void add(std::string stack_element);
         void add(int v1, int v2);
         void substract(int v1, int v2);
