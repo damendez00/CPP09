@@ -6,11 +6,55 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:22:27 by damendez          #+#    #+#             */
-/*   Updated: 2025/02/12 14:41:38 by damendez         ###   ########.fr       */
+/*   Updated: 2025/03/04 20:46:17 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
+
+#include <vector>
+#include <list>
+#include <algorithm>
+
+std::vector<int> generate_insertion_order(int n) {
+    std::vector<int> order;
+    if (n == 0) return order;
+
+    // Generate Jacobsthal numbers until they exceed `n`
+    std::vector<int> jacob = {0, 1}; // J₀=0, J₁=1
+    while (jacob.back() <= n) {
+        jacob.push_back(jacob[jacob.size() - 1] + 2 * jacob[jacob.size() - 2]);
+    }
+
+    // Calculate group sizes from Jacobsthal differences (J₂ onward)
+    std::vector<int> groups;
+    for (size_t i = 2; i < jacob.size(); ++i) {
+        int diff = jacob[i] - jacob[i - 1];
+        if (diff > 0) groups.push_back(diff);
+    }
+    std::reverse(groups.begin(), groups.end()); // Reverse for largest groups first
+
+    // Determine actual group sizes for `n` elements
+    int remaining = n;
+    std::vector<int> group_sizes;
+    for (int g : groups) {
+        if (remaining <= 0) break;
+        int take = std::min(g, remaining);
+        group_sizes.push_back(take);
+        remaining -= take;
+    }
+    if (remaining > 0) group_sizes.push_back(remaining);
+
+    // Generate insertion order (from end of `pend` to start)
+    int current = n - 1;
+    for (int size : group_sizes) {
+        int start = current - size + 1;
+        for (int i = current; i >= start; --i) order.push_back(i);
+        current = start - 1;
+    }
+
+    return order;
+}
 
 std::ostream &operator<<(std::ostream &os, const std::vector<int> &container)
 {
@@ -53,7 +97,7 @@ void mergeInsertSort(std::vector<int> &vec)
         if (vec.size() <= 1)
                 return ;
         
-        // Pair up and compare elements
+        // Step 1: Pair and compare elements
         std::vector<int> pairs;
         for (size_t i = 0; i < vec.size(); i += 2)
         {
@@ -74,29 +118,25 @@ void mergeInsertSort(std::vector<int> &vec)
                         pairs.push_back(vec[i]);
         }
 
-        // Sort pairs
-        std::vector<int> left, right;
+        // Step 2: Split smaller elements 'pend' and larger elements 'main_chain'
+        std::vector<int> pend, main_chain;
         for (size_t i = 0; i < pairs.size(); i += 2)
         {
-                left.push_back(pairs[i]);
+                pend.push_back(pairs[i]);
                 if (i + 1 < pairs.size())
-                        right.push_back(pairs[i + 1]);
+                        main_chain.push_back(pairs[i + 1]);
         }
         
-        mergeInsertSort(left);
-        mergeInsertSort(right);
+        mergeInsertSort(main_chain);
 
         // Merge left and right using binary insertion
-        vec.clear();
-        for (std::vector<int>::const_iterator val = left.begin(); val != left.end(); ++val)
+        vec = main_chain;
+        std::vector<int> order = generate_insertion_order(pend.size());
+        for (std::vector<int>::const_iterator val = order.begin(); val != order.end(); ++val)
         {
+                int value = pend[*val];
                 std::vector<int>::iterator pos = std::lower_bound(vec.begin(), vec.end(), *val);
-                vec.insert(pos, *val);
-        }
-        for (std::vector<int>::const_iterator val = right.begin(); val != right.end(); ++val)
-        {
-                std::vector<int>::iterator pos = std::lower_bound(vec.begin(), vec.end(), *val);
-                vec.insert(pos, *val);
+                vec.insert(pos, value);
         }
 }
 
