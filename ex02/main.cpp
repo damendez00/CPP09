@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:22:32 by damendez          #+#    #+#             */
-/*   Updated: 2025/02/06 17:51:03 by damendez         ###   ########.fr       */
+/*   Updated: 2025/03/05 21:23:17 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int main(int argc, const char *argv[])
                 start = std::clock();
                 list_container = build_container<std::list<int> >(&argv[1]);
                 mergeInsertSort(list_container);
+                std::cout << "After: " << list_container << std::endl;
                 finish = std::clock();
                 std::cout << "Time to process a range of " << list_container.size() << " elements with std::list<int>: "
                         << (float)(finish - start)/CLOCKS_PER_SEC * 1000000 << " us" << std::endl;

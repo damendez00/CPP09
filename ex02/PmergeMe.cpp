@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:22:27 by damendez          #+#    #+#             */
-/*   Updated: 2025/03/04 20:46:17 by damendez         ###   ########.fr       */
+/*   Updated: 2025/03/05 21:38:09 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ std::vector<int> generate_insertion_order(int n) {
     if (n == 0) return order;
 
     // Generate Jacobsthal numbers until they exceed `n`
-    std::vector<int> jacob = {0, 1}; // J₀=0, J₁=1
+    std::vector<int> jacob;
+    jacob.push_back(0); // J₀=0
+    jacob.push_back(1); // J₁=1
     while (jacob.back() <= n) {
         jacob.push_back(jacob[jacob.size() - 1] + 2 * jacob[jacob.size() - 2]);
     }
@@ -37,9 +39,9 @@ std::vector<int> generate_insertion_order(int n) {
     // Determine actual group sizes for `n` elements
     int remaining = n;
     std::vector<int> group_sizes;
-    for (int g : groups) {
+    for (size_t i = 0; i < groups.size(); ++i) {
         if (remaining <= 0) break;
-        int take = std::min(g, remaining);
+        int take = std::min(groups[i], remaining);
         group_sizes.push_back(take);
         remaining -= take;
     }
@@ -47,9 +49,9 @@ std::vector<int> generate_insertion_order(int n) {
 
     // Generate insertion order (from end of `pend` to start)
     int current = n - 1;
-    for (int size : group_sizes) {
-        int start = current - size + 1;
-        for (int i = current; i >= start; --i) order.push_back(i);
+    for (size_t i = 0; i < group_sizes.size(); ++i) {
+        int start = current - group_sizes[i] + 1;
+        for (int j = current; j >= start; --j) order.push_back(j);
         current = start - 1;
     }
 
@@ -66,8 +68,11 @@ std::ostream &operator<<(std::ostream &os, const std::vector<int> &container)
         }
         else {
                 std::vector<int>::const_iterator it = container.begin();
-                for (size_t i = 0; i < 4; i++)
-                        os << *(++it) << " ";
+                for (size_t i = 0; i < 4; i++) {
+                        os << *(it++);
+                        if (i < 3)
+                                os << " ";
+                }
                 os << " [...] " << *(container.end() - 1);
         }
         return os;
@@ -135,7 +140,7 @@ void mergeInsertSort(std::vector<int> &vec)
         for (std::vector<int>::const_iterator val = order.begin(); val != order.end(); ++val)
         {
                 int value = pend[*val];
-                std::vector<int>::iterator pos = std::lower_bound(vec.begin(), vec.end(), *val);
+                std::vector<int>::iterator pos = std::lower_bound(vec.begin(), vec.end(), value);
                 vec.insert(pos, value);
         }
 }
