@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:22:32 by damendez          #+#    #+#             */
-/*   Updated: 2025/03/05 21:23:17 by damendez         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:24:36 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 int main(int argc, const char *argv[])
 {
-        std::vector<int> vector_container;
+        std::vector<int> vector_container = build_container<std::vector<int> >(&argv[1]);
         std::list<int> list_container;
 
         std::clock_t start;
@@ -31,7 +31,7 @@ int main(int argc, const char *argv[])
         // vector container sort
         try {
                 start = std::clock();
-                vector_container = build_container<std::vector<int> >(&argv[1]);
+                //vector_container = build_container<std::vector<int> >(&argv[1]);
                 std::cout << "Before: " << vector_container << std::endl;
                 mergeInsertSort(vector_container);
                 std::cout << "After: " << vector_container << std::endl;
