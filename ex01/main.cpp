@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:31:25 by damendez          #+#    #+#             */
-/*   Updated: 2025/02/19 17:23:35 by damendez         ###   ########.fr       */
+/*   Updated: 2025/03/07 15:50:29 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int main (int argc, char *argv[])
 {
     if (argc != 2)
     {
-        std::cerr << "Error: not enough arguments, proper usage: ./RPN <input>." << std::endl;
+        std::cerr << "Error: invalid argument count, proper usage: ./RPN \"3 4 + 2 *\"" << std::endl;
         return 1;
     }
     try {
