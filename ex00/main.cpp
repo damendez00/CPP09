@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:34:53 by damendez          #+#    #+#             */
-/*   Updated: 2025/02/19 16:23:04 by damendez         ###   ########.fr       */
+/*   Updated: 2025/03/07 15:05:21 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void parseInput(BitcoinExchange &data, const char* inputFile)
 
         fs.open(inputFile, std::fstream::in);
         if (!fs.is_open())
-                throw std::logic_error("Error: could not open input file");
+                throw std::logic_error("Could not open input file");
         while (std::getline(fs, line))
         {
                 std::stringstream       ss(line);
@@ -90,7 +90,7 @@ void parseDb(BitcoinExchange &data)
 int main(int argc, char *argv[])
 {
         if (argc != 2) {
-                std::cerr << "Error: not enough arguments, proper usage: ./btc <inputfile>.";
+                std::cerr << "Error: invalid argument count, proper usage: ./btc <inputfile>" << std::endl;
                 return 1;
         }
         try {

@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:35:58 by damendez          #+#    #+#             */
-/*   Updated: 2025/02/06 20:27:31 by damendez         ###   ########.fr       */
+/*   Updated: 2025/03/07 15:04:05 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,6 @@ void BitcoinExchange::check_key(std::string key)
 std::ostream &operator<<(std::ostream &os, const BitcoinExchange &be)
 {
         typedef std::map<std::string, float> map;
-
 
         for (map::size_type i = 0; i < be.data_size(); i++)
         {
