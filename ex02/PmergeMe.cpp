@@ -6,95 +6,52 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:22:27 by damendez          #+#    #+#             */
-/*   Updated: 2025/03/06 19:29:50 by damendez         ###   ########.fr       */
+/*   Updated: 2025/03/07 14:42:25 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 
-#include <vector>
-#include <list>
-#include <algorithm>
+std::vector<int> generate_insertion_order(int n) {
+    std::vector<int> order;
+    if (n == 0) return order;
 
-// std::vector<int> generate_insertion_order(int n) {
-//     std::vector<int> order;
-//     if (n == 0) return order;
+    // Generate Jacobsthal numbers until they exceed `n`
+    std::vector<int> jacob;
+    jacob.push_back(0); // J₀=0
+    jacob.push_back(1); // J₁=1
+    while (jacob.back() <= n) {
+        jacob.push_back(jacob[jacob.size() - 1] + 2 * jacob[jacob.size() - 2]);
+    }
 
-//     // Generate Jacobsthal numbers until they exceed `n`
-//     std::vector<int> jacob;
-//     jacob.push_back(0); // J₀=0
-//     jacob.push_back(1); // J₁=1
-//     while (jacob.back() <= n) {
-//         jacob.push_back(jacob[jacob.size() - 1] + 2 * jacob[jacob.size() - 2]);
-//     }
+    // Calculate group sizes from Jacobsthal differences (J₂ onward)
+    std::vector<int> groups;
+    for (size_t i = 2; i < jacob.size(); ++i) {
+        int diff = jacob[i] - jacob[i - 1];
+        if (diff > 0) groups.push_back(diff);
+    }
+    std::reverse(groups.begin(), groups.end()); // Reverse for largest groups first
 
-//     // Calculate group sizes from Jacobsthal differences (J₂ onward)
-//     std::vector<int> groups;
-//     for (size_t i = 2; i < jacob.size(); ++i) {
-//         int diff = jacob[i] - jacob[i - 1];
-//         if (diff > 0) groups.push_back(diff);
-//     }
-//     std::reverse(groups.begin(), groups.end()); // Reverse for largest groups first
+    // Determine actual group sizes for `n` elements
+    int remaining = n;
+    std::vector<int> group_sizes;
+    for (size_t i = 0; i < groups.size(); ++i) {
+        if (remaining <= 0) break;
+        int take = std::min(groups[i], remaining);
+        group_sizes.push_back(take);
+        remaining -= take;
+    }
+    if (remaining > 0) group_sizes.push_back(remaining);
 
-//     // Determine actual group sizes for `n` elements
-//     int remaining = n;
-//     std::vector<int> group_sizes;
-//     for (size_t i = 0; i < groups.size(); ++i) {
-//         if (remaining <= 0) break;
-//         int take = std::min(groups[i], remaining);
-//         group_sizes.push_back(take);
-//         remaining -= take;
-//     }
-//     if (remaining > 0) group_sizes.push_back(remaining);
+    // Generate insertion order (from end of `pend` to start)
+    int current = n - 1;
+    for (size_t i = 0; i < group_sizes.size(); ++i) {
+        int start = current - group_sizes[i] + 1;
+        for (int j = current; j >= start; --j) order.push_back(j);
+        current = start - 1;
+    }
 
-//     // Generate insertion order (from end of `pend` to start)
-//     int current = n - 1;
-//     for (size_t i = 0; i < group_sizes.size(); ++i) {
-//         int start = current - group_sizes[i] + 1;
-//         for (int j = current; j >= start; --j) order.push_back(j);
-//         current = start - 1;
-//     }
-
-//     return order;
-// }
-
-std::ostream &operator<<(std::ostream &os, const std::vector<int> &container)
-{
-        if (container.size() <= 10) {
-                if (!container.empty()) {
-                        for (std::vector<int>::const_iterator it = container.begin(); it != container.end(); it++)
-                                os << *it << " ";                        
-                }
-        }
-        else {
-                std::vector<int>::const_iterator it = container.begin();
-                for (size_t i = 0; i < 4; i++) {
-                        os << *(it++);
-                        if (i < 3)
-                                os << " ";
-                }
-                os << " [...] " << *(container.end() - 1);
-        }
-        return os;
-}
-
-std::ostream &operator<<(std::ostream &os, const std::list<int> &container)
-{
-        if (container.size() <= 10) {
-                if (!container.empty()) {
-                        for (std::list<int>::const_iterator it = container.begin(); it != container.end(); it++)
-                                os << *it << " ";
-                }
-        }
-        else {
-                std::list<int>::const_iterator it = container.begin();
-                for (size_t i = 0; i < 4; i++)
-                        os << *(++it) << " ";
-                std::list<int>::const_iterator last = container.end();
-                --last;
-                os << " [...] " << *last;
-        }
-        return os;
+    return order;
 }
 
 void mergeInsertSort(std::vector<int> &vec)
@@ -133,39 +90,25 @@ void mergeInsertSort(std::vector<int> &vec)
         }
         
         mergeInsertSort(main_chain);
-
+        
         // Merge left and right using binary insertion
         vec = main_chain;
-        std::vector<int> order = generate_insertion_order<std::vector<int> >(pend.size());
+        std::vector<int> order = generate_insertion_order(pend.size());
         for (std::vector<int>::const_iterator val = order.begin(); val != order.end(); ++val)
         {
                 int value = pend[*val];
-                std::vector<int>::iterator pos = std::lower_bound(vec.begin(), vec.end(), value);
+                std::vector<int>::iterator pos = binarySearch<std::vector<int> >(vec.begin(), vec.end(), value);
                 vec.insert(pos, value);
         }
 }
 
-std::list<int>::iterator binarySearch(std::list<int>::iterator begin, std::list<int>::iterator end, int value) {
-        while (begin != end) {
-                std::list<int>::iterator mid = begin;
-                std::advance(mid, std::distance(begin, end) / 2);
-                if (*mid < value) {
-                        begin = ++mid;
-                } else {
-                        end = mid;
-                }
-        }
-        return begin;
-}
-
 void mergeInsertSort(std::list<int> &list)
 {
-    if (list.size() <= 1)
-        return;
-
-    // Pair up and compare elements
-    std::list<int> pairs;
-    std::list<int>::const_iterator it = list.begin();
+        if (list.size() <= 1)
+                return;
+                
+        std::list<int> pairs;
+        std::list<int>::const_iterator it = list.begin();
     while (it != list.end())
     {
         int first = *it;
@@ -188,7 +131,6 @@ void mergeInsertSort(std::list<int> &list)
         }
     }
 
-    // Split into left and right
     std::list<int> pend, main_chain;
     bool addToLeft = true;
     for (std::list<int>::const_iterator val = pairs.begin(); val != pairs.end(); val++)
@@ -201,18 +143,54 @@ void mergeInsertSort(std::list<int> &list)
         addToLeft = !addToLeft;
     }
 
-    // Recursively sort left and right
     mergeInsertSort(main_chain);
-    
-    
+        
     list = main_chain;
-    std::vector<int> order = generate_insertion_order<std::vector<int> >(pend.size());
+    std::vector<int> order = generate_insertion_order(pend.size());
     for (std::vector<int>::const_iterator val = order.begin(); val != order.end(); ++val)
     {
         std::list<int>::iterator pend_it = pend.begin();
         std::advance(pend_it, *val);
         int value = *pend_it;
-        std::list<int>::iterator pos = binarySearch(list.begin(), list.end(), value);
+        std::list<int>::iterator pos = binarySearch<std::list<int> >(list.begin(), list.end(), value);
         list.insert(pos, value);
     }
+}
+
+std::ostream &operator<<(std::ostream &os, const std::vector<int> &container)
+{
+        if (container.size() <= 10) {
+                if (!container.empty()) {
+                        for (std::vector<int>::const_iterator it = container.begin(); it != container.end(); it++)
+                                os << *it << " ";                        
+                }
+        } else {
+                std::vector<int>::const_iterator it = container.begin();
+                for (size_t i = 0; i < 4; i++) {
+                        os << *(it++);
+                        if (i < 3)
+                                os << " ";
+                }
+                os << " [...] " << *(--container.end());
+        }
+        return os;
+}
+
+std::ostream &operator<<(std::ostream &os, const std::list<int> &container)
+{
+        if (container.size() <= 10) {
+                if (!container.empty()) {
+                        for (std::list<int>::const_iterator it = container.begin(); it != container.end(); it++)
+                                os << *it << " ";
+                }
+        } else {
+                std::list<int>::const_iterator it = container.begin();
+                for (size_t i = 0; i < 4; i++) {
+                        os << *(it++);
+                        if (i < 3)
+                                os << " ";
+                }
+                os << " [...] " << *(--container.end());
+        }
+        return os;
 }
