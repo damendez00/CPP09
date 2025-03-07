@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:22:27 by damendez          #+#    #+#             */
-/*   Updated: 2025/03/07 14:42:25 by damendez         ###   ########.fr       */
+/*   Updated: 2025/03/07 17:21:58 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ std::vector<int> generate_insertion_order(int n) {
     std::vector<int> order;
     if (n == 0) return order;
 
-    // Generate Jacobsthal numbers until they exceed `n`
     std::vector<int> jacob;
     jacob.push_back(0); // J₀=0
     jacob.push_back(1); // J₁=1
@@ -30,6 +29,7 @@ std::vector<int> generate_insertion_order(int n) {
         int diff = jacob[i] - jacob[i - 1];
         if (diff > 0) groups.push_back(diff);
     }
+    
     std::reverse(groups.begin(), groups.end()); // Reverse for largest groups first
 
     // Determine actual group sizes for `n` elements

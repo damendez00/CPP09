@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:22:24 by damendez          #+#    #+#             */
-/*   Updated: 2025/03/07 14:40:45 by damendez         ###   ########.fr       */
+/*   Updated: 2025/03/07 17:06:28 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ Container build_container(const char **args)
                 int entry;
                 std::stringstream ss(args[i]);
                 ss >> entry;
-                if (ss.fail())
-                        throw std::invalid_argument("Invalid argument");
+                if (ss.fail() || !ss.eof())
+                        throw std::invalid_argument("Invalid argument: " + std::string(args[i]));
                 if (find_duplicate(container, entry) || entry < 0)
-                        throw std::invalid_argument("Duplicate or negative value");
+                        throw std::invalid_argument("Duplicate or negative value: " + std::string(args[i]));
                 container.push_back(entry);
         }
         if (container.size() <= 1)
