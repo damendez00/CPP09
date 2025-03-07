@@ -6,7 +6,7 @@
 /*   By: damendez <damendez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:54:47 by damendez          #+#    #+#             */
-/*   Updated: 2025/02/06 19:53:00 by damendez         ###   ########.fr       */
+/*   Updated: 2025/03/07 15:45:22 by damendez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@
 # include <cstdlib>
 # include <ctime>
 
+typedef std::map<std::string, float> map;
+
 class BitcoinExchange
 {
-        typedef std::map<std::string, float> map;
         private:
                 map data;
         public:
@@ -34,12 +35,12 @@ class BitcoinExchange
                 ~BitcoinExchange();
 
                 map::size_type data_size() const;
-                map::const_iterator operator[](map::size_type pos) const;
-                map::value_type::second_type operator[](std::string key) const;
+                map::const_iterator operator[](map::size_type pos) const; // access by position: map[i]
+                map::mapped_type operator[](const std::string key) const; // access by key value: map[key]
 
-                void append(std::string key, float value);
-                void append(std::string line);
-                void check_key(std::string key);
+                void append(const std::string &key, float value);
+                void append(const std::string &line);
+                void check_key(const std::string &key) const;
 };
 
 std::ostream &operator<<(std::ostream &os, const BitcoinExchange &be);
